@@ -10,8 +10,10 @@ const blogCollectionPath = await env("ASTRO_BLOG_COLLECTION_PATH");
 
 const content = `---
 {
-  "title": ${title}${description ? `\n"description": "${description}",` : ""},
-  "published": ${new Date().toISOString()}
+  "title": "${title}",${
+  description ? `\n  "description": "${description}",` : ""
+}
+  "published": "${new Date().toISOString()}"
 }
 ---
 
