@@ -2,15 +2,26 @@
 
 import '@johnlindquist/kit';
 
-const title = await arg("What's the title of the post?");
-const description = await arg("What's the description of the post?");
-const slug = title.toLowerCase().split(' ').join('-');
-
-const astroBlogProjectPath = await env('ASTRO_BLOG_PROJECT_PATH');
-const blogCollectionPath = await env(
-  'ASTRO_BLOG_COLLECTION_PATH',
-  async () => 'src/content/blog',
+const astroBlogProjectPath = await env('ASTRO_BLOG_PROJECT_PATH', () =>
+  path({
+    onlyDirs: true,
+  }),
 );
+
+const blogCollectionPath = await env('ASTRO_BLOG_COLLECTION_PATH', () =>
+  path({
+    startPath: astroBlogProjectPath,
+    onlyDirs: true,
+  }),
+);
+
+const title = await arg('Title');
+const description = await arg("What's the description of the post?");
+const slug = title
+  .toLowerCase()
+  .split(' ')
+  .join('-')
+  .replace(/[^a-z0-9-]/g, '');
 
 const content = `---
 {
@@ -23,14 +34,8 @@ const content = `---
 
 `;
 
-const filePath = `${astroBlogProjectPath}/${blogCollectionPath}/${slug}.md`;
+const filePath = `${blogCollectionPath}/${slug}.md`;
 const editedContent = await editor(content);
-
-console.log({
-  filePath,
-  astroBlogProjectPath,
-  blogCollectionPath,
-});
 
 await writeFile(filePath, editedContent);
 await exec(`/opt/homebrew/bin/code ${astroBlogProjectPath}`);

@@ -2,10 +2,14 @@
   "type": "module",
   "devDependencies": {
     "@johnlindquist/kit": "file:../.kit",
-    "form-data": "^4.0.0"
+    "form-data": "^4.0.0",
+    "prettier": "^3.1.1"
   },
   "engines": {
     "node": "18.18.2",
     "npm": "9.8.1"
+  },
+  "scripts": {
+    "prettier": "prettier --write ."
   }
 }
