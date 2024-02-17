@@ -1,0 +1,49 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: 255, 255, 255;
+    --color-primary: 251, 191, 36;
+    --color-secondary: 52, 52, 52;
+    --color-background: 2, 2, 2;
+    --opacity: 0.65;
+    --mono-font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+      Consolas, 'DejaVu Sans Mono', monospace;
+    --sans-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
+    --serif-font: 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times',
+      'serif';
+  }
+
+  body {
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--color-background), 0.9),
+      rgba(var(--color-text), 0.1)
+    );
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-text: 255, 255, 255;
+    --color-primary: 251, 191, 36;
+    --color-secondary: 52, 52, 52;
+    --color-background: 2, 2, 2;
+    --opacity: 0.65;
+    --mono-font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+      Consolas, 'DejaVu Sans Mono', monospace;
+    --sans-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
+    --serif-font: 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times',
+      'serif';
+  }
+
+  body {
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--color-background), 0.9),
+      rgba(var(--color-text), 0.1)
+    );
+  }
+}

@@ -2,8 +2,15 @@
   "type": "module",
   "devDependencies": {
     "@johnlindquist/kit": "file:../.kit",
+    "cheerio": "^1.0.0-rc.12",
     "form-data": "^4.0.0",
-    "prettier": "^3.1.1"
+    "openai": "^4.24.7",
+    "prettier": "^3.1.1",
+    "safe-stable-stringify": "^2.4.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "tus-js-client": "^4.0.1",
+    "xml2js": "^0.6.2"
   },
   "engines": {
     "node": "18.18.2",

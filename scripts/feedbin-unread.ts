@@ -6,36 +6,47 @@
 
 import '@johnlindquist/kit';
 
-const feedbinUsername = await env('FEEDBIN_USERNAME');
-const feedbinPassword = await env('FEEDBIN_PASSWORD', () =>
-  arg({
-    placeholder: 'Feedbin Password',
-    secret: true,
-  }),
-);
-const options = {
-  headers: {
-    Authorization: `Basic ${btoa(`${feedbinUsername}:${feedbinPassword}`)}`,
-  },
+const feedbinUsername = await env('FEEDBIN_USERNAME', {
+  placeholder: 'Feedbin Username',
+});
+const feedbinPassword = await env('FEEDBIN_PASSWORD', {
+  secret: true,
+  placeholder: 'Feedbin Password',
+});
+
+const headers = {
+  Authorization: `Basic ${btoa(`${feedbinUsername}:${feedbinPassword}`)}`,
 };
 
-const { data } = await get(
-  `https://api.feedbin.com/v2/entries.json?read=false`,
-  options,
+type Entries = EntriesItem[];
+interface EntriesItem {
+  author: null;
+  content: string;
+  created_at: string;
+  extracted_content_url: string;
+  feed_id: number;
+  id: number;
+  published: string;
+  summary: string;
+  title: string;
+  url: string;
+}
+
+const selection = await arg<EntriesItem>('Article Title', async () =>
+  get<Entries>(`https://api.feedbin.com/v2/entries.json?read=false`, {
+    headers,
+  }).then(({ data }) =>
+    data.map((item: any) => ({
+      name: item.title,
+      description: item.url,
+      value: item,
+    })),
+  ),
 );
 
-const selection = await arg<any>(
-  data.length > 0 ? 'Article Title' : 'No unread articles',
-  data.map((item: any) => ({
-    name: item.title,
-    description: item.url,
-    value: item,
-  })),
-);
-
-await open(selection.url);
+open(selection.url);
 await post(
   `https://api.feedbin.com/v2/unread_entries/delete.json`,
   { unread_entries: [selection.id] },
-  options,
+  { headers },
 );
