@@ -36,8 +36,8 @@ const selection = await arg<EntriesItem>('Article Title', async () =>
   get<Entries>(`https://api.feedbin.com/v2/entries.json?read=false`, {
     headers,
   }).then(({ data }) =>
-    data.map((item: any) => ({
-      name: item.title,
+    data.map((item) => ({
+      name: item.title ?? '(No Title)',
       description: item.url,
       value: item,
     })),

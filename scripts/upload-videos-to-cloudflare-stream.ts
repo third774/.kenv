@@ -26,12 +26,10 @@ interface FilesItem {
 let files: Files = await drop('Drop videos here');
 
 const streamAccountId = await env('STREAM_ACCOUNT_ID');
-const streamApiToken = await env('STREAM_API_TOKEN', () =>
-  arg({
-    placeholder: 'Stream API Token',
-    secret: true,
-  }),
-);
+const streamApiToken = await env('STREAM_API_TOKEN', {
+  placeholder: 'Stream API Token',
+  secret: true,
+});
 
 const w = await widget(
   `

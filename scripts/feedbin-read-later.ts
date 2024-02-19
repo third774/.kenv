@@ -3,27 +3,19 @@
 // Email: kevin.kipp@gmail.com
 // Twitter: https://twitter.com/kevin_kipp
 // Github: https://github.com/third774
-// Shortcut: cmd+shift+opt+ctrl+l
 
 import '@johnlindquist/kit';
 
 const feedbinUsername = await env('FEEDBIN_USERNAME');
-const feedbinPassword = await env('FEEDBIN_PASSWORD', () =>
-  arg({
-    placeholder: 'Feedbin Password',
-    secret: true,
-  }),
-);
+const feedbinPassword = await env('FEEDBIN_PASSWORD', { secret: true });
+const Authorization = `Basic ${btoa(`${feedbinUsername}:${feedbinPassword}`)}`;
+const headers = { Authorization };
 
 const url = await getSelectedText();
 
-await post(
-  `https://api.feedbin.com/v2/pages.json`,
-  { url },
-  {
-    headers: {
-      Authorization: `Basic ${btoa(`${feedbinUsername}:${feedbinPassword}`)}`,
-    },
-  },
-);
-await toast('Saved to Read Later');
+if (URL.canParse(url)) {
+  await post(`https://api.feedbin.com/v2/pages.json`, { url }, { headers });
+  await notify('Successfully added to Read Later.');
+} else {
+  await notify('Invalid URL!');
+}
