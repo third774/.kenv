@@ -45,6 +45,7 @@ const w = await widget(
   </div>
 `,
   {
+    alwaysOnTop: true,
     state: {
       files,
     },
@@ -90,9 +91,9 @@ files.forEach(async ({ name, path, size }) => {
         files,
       });
       if (files.every((f) => f.progress === 100)) {
-        toast('All uploads finished');
+        notify('All uploads finished');
       } else {
-        toast(`Upload finished: ${name}`);
+        notify(`Upload finished: ${name}`);
       }
     },
     onAfterResponse: function (req, res) {
